@@ -1,10 +1,20 @@
 import { Request, Response } from "express";
 import { OrderServices } from "./order.service";
+import orderSchema from "./order.joi.validation";
 
 const createOrder = async (req: Request, res: Response) => {
   try {
     const orderData = req.body;
-    const result = await OrderServices.createOrderIntoDB(orderData);
+    const { error, value } = orderSchema.validate(orderData);
+    const result = await OrderServices.createOrderIntoDB(value);
+
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: "Data validation unsuccessfully!",
+        error: error.details,
+      });
+    }
 
     res.status(200).json({
       success: true,
