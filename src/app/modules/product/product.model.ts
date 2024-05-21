@@ -19,5 +19,4 @@ const productSchema = new Schema<IProduct>({
   },
 });
 
-// 3. Create a Model.
 export const ProductModel = model<IProduct>("Product", productSchema);
