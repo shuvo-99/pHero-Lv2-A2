@@ -1,11 +1,20 @@
 import { Request, Response } from "express";
 import { ProductServices } from "./product.service";
+import productSchema from "./product.joi.validation";
 
 const createProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
+    const { error, value } = productSchema.validate(productData);
+    const result = await ProductServices.createProductIntoDB(value);
 
-    const result = await ProductServices.createProductIntoDB(productData);
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: "Data validation unsuccessfully!",
+        error: error.details,
+      });
+    }
 
     res.status(200).json({
       success: true,
