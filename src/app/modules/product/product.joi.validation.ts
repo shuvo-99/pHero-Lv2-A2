@@ -1,5 +1,4 @@
 import Joi from "joi";
-import { IProduct } from "./product.interface";
 
 const variantSchema = Joi.object({
   type: Joi.string().required(),
