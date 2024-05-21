@@ -1,0 +1,25 @@
+1. npm init -y
+2. npm install express
+3. npm install mongoose --save
+4. npm install typescript --save-dev
+5. npm i --save-dev @types/node
+6. npm i --save-dev @types/express
+7. npm i cors
+8. npm i --save-dev @types/cors
+9. npm i dotenv
+** Change terminal to Command Prompt(cmd) ** 
+10. tsc -init
+12. Add in tsconfig.json
+    {
+      
+      "include": ["src"], // which files to compile
+      "exclude": ["node_modules"], // which files to skip
+    }
+12. npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
+13. npx eslint --init
+    - To check syntax and find problems
+    - JavaScript modules (import/export)
+    - None of these
+    - typescript
+    - node
+14. npm i ts-node-dev --save-dev
