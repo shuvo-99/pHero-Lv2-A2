@@ -23,6 +23,10 @@ const createProduct = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.log("error creating product ---", err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
@@ -46,13 +50,24 @@ const getSingleProduct = async (req: Request, res: Response) => {
     const { productId } = req.params;
     const result = await ProductServices.getSingleProductFromDB(productId);
 
-    res.status(200).json({
-      success: true,
-      message: "Products fetched  successfully!",
-      data: result,
-    });
+    if (result.length > 0) {
+      res.status(200).json({
+        success: true,
+        message: "Product fetched  successfully!",
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Product not found!",
+      });
+    }
   } catch (err) {
     console.log("error fetching product ---", err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
@@ -65,13 +80,24 @@ const updateSingleProduct = async (req: Request, res: Response) => {
       updatedData
     );
 
-    res.status(200).json({
-      success: true,
-      message: "Products updated  successfully!",
-      data: result,
-    });
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: "Product updated  successfully!",
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Product not updated!",
+      });
+    }
   } catch (err) {
     console.log("error updating product ---", err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
@@ -80,13 +106,24 @@ const deleteSingleProduct = async (req: Request, res: Response) => {
     const { productId } = req.params;
     const result = await ProductServices.deleteSingleProductToDB(productId);
 
-    res.status(200).json({
-      success: true,
-      message: "Products deleted  successfully!",
-      data: result,
-    });
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: "Product deleted  successfully!",
+        data: null,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Product not deleted!",
+      });
+    }
   } catch (err) {
     console.log("error deleteing product ---", err);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
 
